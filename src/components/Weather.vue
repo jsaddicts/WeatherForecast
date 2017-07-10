@@ -1,23 +1,40 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <input type="text" placeholder="Enter your Location" />
-    <button>Check</button>
-  </div>
+    <input type="text" placeholder=" Enter your location" >
+    <button v-on:click="getLocation" >Get Your Location</button>
+      </div>
 </template>
+  
+
 
 <script>
+
+import axios from 'axios'
+import API_KEY from '../constants'
+
 export default {
   name: 'Weather',
   data () {
     return {
-      msg: 'Weather Forecast'
+      msg: 'Weather Forecast',
+      loc: ''
     }
+  },
+  methods: {
+    getLocation : function(){
+      axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBmcGc-h0bg0sT3DC-FWiStVmug3cRDobc`)
+            .then(res => {
+             this.loc = res.data.location
+            })
+            .catch(err => console.log(err))
+
+    }
+    
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
